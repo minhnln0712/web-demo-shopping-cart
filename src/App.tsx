@@ -1,3 +1,4 @@
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import React from "react";
 import {
   BrowserRouter,
@@ -9,31 +10,34 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login/Login";
-import Guest from "./pages/Guest/Guest";
+import Home from "./pages/Home/Home";
 import User from "./pages/User/User";
-import { Provider, useSelector } from "react-redux";
-import { store } from "./redux/store";
+import { useAppDispatch, useAppSelector } from "./redux/hooks";
+import NavGuest from "./components/Navbars/NavGuest/NavGuest";
+import NavUser from "./components/Navbars/NavUser/NavUser";
 
 function App() {
-  const isAuthenticated = useSelector(
+  const dispatch = useAppDispatch();
+  const isAuthenticated = useAppSelector(
     (state: any) => state.user.value.isAuthenticated
   );
 
-  const;
+  // const router = createBrowserRouter(createRoutesFromElements)
+
+  // const
+
+  const selectNavBar = () => (isAuthenticated ? <NavUser /> : <NavGuest />);
 
   return (
     <div className="App">
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route />
-            <Route path="/" element={<Guest />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/user" element={<User />} />
-            <Route />
-          </Routes>
-        </BrowserRouter>
-      </Provider>
+      <BrowserRouter>
+        {selectNavBar()}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/user" element={<User />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

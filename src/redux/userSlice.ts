@@ -1,24 +1,27 @@
-import { PayloadAction, configureStore, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
+// Cấu hình type của value trong UserState
 interface UserStateValue {
+  userId: string;
   roleId: string;
   userName: string;
   phoneNumber: string;
-  address: string;
   isAuthenticated: boolean;
   token: string;
 }
 
+// Cấu hình value của UserState
 interface UserState {
   value: UserStateValue;
 }
 
+// Value gốc của UserState
 const initialState = {
   value: {
+    userId: "",
     roleId: "",
     userName: "",
     phoneNumber: "",
-    address: "",
     isAuthenticated: false,
     token: "",
   },
@@ -37,4 +40,5 @@ export const userSlice = createSlice({
   },
 });
 
+//Những function đã dc tạo để quản lý state...
 export const { login, logout } = userSlice.actions;

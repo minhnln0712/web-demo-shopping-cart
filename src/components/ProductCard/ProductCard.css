@@ -1,0 +1,13 @@
+.card {
+  /* border: 0.1px solid black; */
+}
+
+img.card {
+  width: 325px;
+  height: auto;
+}
+
+.image-card {
+  width: 325px;
+  height: 325px;
+}

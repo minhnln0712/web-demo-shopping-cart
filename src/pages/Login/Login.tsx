@@ -1,54 +1,97 @@
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import "./Login.css";
-import { useState } from "react";
-import { login, logout } from "./../../redux/userSlice";
-import { useDispatch } from "react-redux";
+import { useState, forwardRef } from "react";
+import { login } from "./../../redux/userSlice";
+import { useAppDispatch, useAppSelector } from "./../../redux/hooks";
+import { authenticateToApp } from "./../../services/services";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import Link from "@mui/material/Link";
+import logo from "./../../assets/images/logo.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Login(params: any) {
-  // const [phoneNumber, setPhoneNumber] = useState<string>("");
-
-  const dispatch = useDispatch();
-
-  const schema = yup.object().shape({
-    phoneNumber: yup.string().required("Your phone number is required!"),
-    password: yup.string().required("Your password is required!"),
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [phoneNumber, setPhoneNumber] = useState<string>("");
+  const [phoneNumberError, setPhoneNumberError] = useState<any>({
+    isError: false,
+    textError: "",
   });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
+  const [password, setPassword] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<any>({
+    isError: false,
+    textError: "",
   });
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    setPhoneNumberError({
+      isError: false,
+      textError: "",
+    });
+    setPasswordError({
+      isError: false,
+      textError: "",
+    });
+    if (phoneNumber.trim() === "") {
+      setPhoneNumberError({
+        isError: true,
+        textError: "Please enter your phone number.",
+      });
+    }
+    if (password.trim() === "") {
+      setPasswordError({
+        isError: true,
+        textError: "Please enter your password.",
+      });
+    }
+    if (phoneNumber && password) {
+      // const userData = authenticateToApp(phoneNumber, password);
 
-  const onSubmit = (data: any) => {
-    // setPhoneNumber(data.phoneNumber);
-    // dispatch(login({ phoneNumber: data.phoneNumber }));
+      dispatch(
+        login({
+          userId: "2",
+          roleId: "1",
+          userName: "nhatminh",
+          phoneNumber: "071220222222",
+          isAuthenticated: true,
+          token: "asdasdkasdnbkasndb",
+        })
+      );
+      navigate("/", { replace: true });
+    }
   };
 
   return (
     <div>
-      <h1>This is a Login page</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
+      <form onSubmit={handleSubmit}>
+        <img src={logo} alt="Logo" />
+        <TextField
+          onChange={(e) => setPhoneNumber(e.target.value)}
+          label="Phone number"
           type="text"
-          placeholder="Phone Number"
-          {...register("phoneNumber")}
+          error={phoneNumberError.isError}
+          helperText={phoneNumberError.textError}
+          variant="outlined"
+          color="primary"
         />
-        {/* <p>{errors.phoneNumber?.message}</p> */}
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password")}
-        />
-        {/* <p>{errors.password?.message}</p> */}
-        <input type="submit" value="Login" />
-      </form>
 
-      <button onClick={() => dispatch(logout())}>Logout</button>
+        <TextField
+          onChange={(e) => setPassword(e.target.value)}
+          label="Password"
+          type="password"
+          error={passwordError.isError}
+          helperText={passwordError.textError}
+          variant="outlined"
+        />
+
+        <Button type="submit" variant="contained">
+          Login
+        </Button>
+
+        <Button variant="outlined">Register</Button>
+
+        <Link href="/">Return to home</Link>
+      </form>
     </div>
   );
 }

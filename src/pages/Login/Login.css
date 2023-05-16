@@ -1,3 +1,18 @@
-form > p {
-  color: red;
+form {
+  width: 400px;
+  height: 700px;
+  margin: auto;
+  margin-top: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: space-between;
+}
+
+span {
+  /* height: 10px; */
+}
+
+body {
+  background-color: #f6f6f6;
 }
