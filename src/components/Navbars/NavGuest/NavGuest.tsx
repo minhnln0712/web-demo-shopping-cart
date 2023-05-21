@@ -11,17 +11,10 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import LoginIcon from "@mui/icons-material/Login";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "./../../../redux/hooks";
 
 export default function NavGuest(params: any) {
   const navigate = useNavigate();
-
-  const getNumberOfProductsInCart = useAppSelector(
-    (state) => state.cart.listCart.length
-  );
 
   const pages = [
     {
@@ -151,21 +144,6 @@ export default function NavGuest(params: any) {
                 }}
               >
                 <LoginIcon />
-              </Button>
-            </Link>
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Link to="#" style={{ textDecoration: "none" }}>
-              <Button
-                sx={{
-                  pt: "3px",
-                  color: "#146C94",
-                  display: "block",
-                }}
-              >
-                <Badge color="primary" badgeContent={getNumberOfProductsInCart}>
-                  <ShoppingBasketIcon />
-                </Badge>
               </Button>
             </Link>
           </Box>

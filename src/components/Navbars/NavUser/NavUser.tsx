@@ -14,6 +14,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { logout } from "./../../../redux/userSlice";
+import { removeAllCart } from "./../../../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import Badge from "@mui/material/Badge";
@@ -21,10 +22,9 @@ import Badge from "@mui/material/Badge";
 export default function NavUser(params: any) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const getNumberOfProductsInCart = useAppSelector(
-    (state) => state.cart.listCart.length
-  );
+  const cartList: any[] = useAppSelector((state) => {
+    return state.cart.listCart;
+  });
 
   const pages = [
     {
@@ -60,6 +60,7 @@ export default function NavUser(params: any) {
 
   const logoutApp = () => {
     dispatch(logout());
+    dispatch(removeAllCart());
     navigate("/", { replace: true });
   };
 
@@ -159,7 +160,9 @@ export default function NavUser(params: any) {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar sx={{ bgcolor: "##2196f3" }}>
+                  {useAppSelector((state) => state.user.value.userName)[0]}
+                </Avatar>
               </IconButton>
             </Tooltip>
             <Menu
@@ -187,7 +190,7 @@ export default function NavUser(params: any) {
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Link to="#" style={{ textDecoration: "none" }}>
+            <Link to="/cart" style={{ textDecoration: "none" }}>
               <Button
                 sx={{
                   pt: "3px",
@@ -195,7 +198,7 @@ export default function NavUser(params: any) {
                   display: "block",
                 }}
               >
-                <Badge color="primary" badgeContent={getNumberOfProductsInCart}>
+                <Badge color="primary" badgeContent={cartList.length}>
                   <ShoppingBasketIcon />
                 </Badge>
               </Button>

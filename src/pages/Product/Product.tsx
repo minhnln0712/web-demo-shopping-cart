@@ -1,24 +1,47 @@
-import "./ProductCard.css";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { addToCart, updateACart } from "./../../redux/cartSlice";
+import Grid from "@mui/material/Grid";
 import Axios from "axios";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Button from "@mui/material/Button";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { addToCart, updateACart } from "../../redux/cartSlice";
 
-export default function ProductCard(params: any) {
+export default function Product(params: any) {
+  let { productId } = useParams();
+
+  useEffect(() => {
+    Axios.get(`https://localhost:7040/api/Products/${productId}`)
+      .then((response) => {
+        setProduct(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   const dispatch = useAppDispatch();
+
   const getLatestCartId: number = useAppSelector((state) =>
     state.cart.listCart.length === 0
       ? 1
       : state.cart.listCart[state.cart.listCart.length - 1].cartId + 1
   );
+
+  const [product, setProduct] = useState<any>({
+    productId: "",
+    productName: "",
+    productDetail: "",
+    price: 0,
+    productTypeName: "",
+    img: "",
+  });
+
   const cartList: any[] = useAppSelector((state) => state.cart.listCart);
+
   const getAccessToken: String = useAppSelector(
     (state) => state.user.value.token
   );
   const getUserId: String = useAppSelector((state) => state.user.value.userId);
+
   const addProductToCart = (productId: string) => {
     if (getAccessToken === null) {
       alert("You need to login before adding product!");
@@ -82,37 +105,24 @@ export default function ProductCard(params: any) {
   };
 
   return (
-    <div className="card">
-      <Box
-        sx={{
-          width: 325,
-          height: 500,
-          backgroundColor: "#9BA4B5",
-          "&:hover": {
-            backgroundColor: "#F1F6F9",
-            opacity: [0.9],
-          },
-        }}
-      >
-        <Link
-          to={`/product/${params.productId}`}
-          style={{ textDecoration: "none", color: "#212A3E" }}
-        >
-          <div className="image-card">
-            <img className="card" src={params.img} alt={params.productName} />
-          </div>
-        </Link>
-
-        <p>{params.productName}</p>
-        <p>{params.price}</p>
-        <Button
-          variant="contained"
-          color="inherit"
-          onClick={() => addProductToCart(params.productId)}
-        >
-          <AddShoppingCartIcon /> Add to cart
-        </Button>
-      </Box>
-    </div>
+    <>
+      <Grid container spacing={2} sx={{ mt: 3 }}>
+        <Grid item xs={8}>
+          <img className="card" src={product.img} alt={product.productName} />
+        </Grid>
+        <Grid item xs={4}>
+          <p>{product.productName}</p>
+          <p>{product.price}</p>
+          <p>{product.productDetail}</p>
+          <Button
+            variant="contained"
+            color="inherit"
+            onClick={() => addProductToCart(product.productId)}
+          >
+            <AddShoppingCartIcon /> Add to cart
+          </Button>
+        </Grid>
+      </Grid>
+    </>
   );
 }
