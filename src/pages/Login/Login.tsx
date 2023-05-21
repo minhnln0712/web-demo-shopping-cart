@@ -141,7 +141,11 @@ export default function Login(params: any) {
           Login
         </Button>
 
-        <Button sx={{ mt: "10px", mb: "10px" }} variant="outlined">
+        <Button
+          sx={{ mt: "10px", mb: "10px" }}
+          variant="outlined"
+          onClick={() => navigate("/signup", { replace: true })}
+        >
           Register
         </Button>
 

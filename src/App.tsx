@@ -17,7 +17,7 @@ import Product from "./pages/Product/Product";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import NavGuest from "./components/Navbars/NavGuest/NavGuest";
 import NavUser from "./components/Navbars/NavUser/NavUser";
-import { login } from "./redux/userSlice";
+import SignUp from "./pages/SignUp/SignUp";
 
 function App() {
   const userRole = useAppSelector((state: any) => state.user.value.roleId);
@@ -42,9 +42,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/user" element={<User />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/product/:productId" element={<Product />} />
+          SignUp
         </Routes>
       </BrowserRouter>
     </div>

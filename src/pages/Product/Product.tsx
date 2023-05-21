@@ -8,10 +8,10 @@ import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { addToCart, updateACart } from "../../redux/cartSlice";
 
 export default function Product(params: any) {
-  let { productId } = useParams();
+  // let { productId } = useParams();
 
   useEffect(() => {
-    Axios.get(`https://localhost:7040/api/Products/${productId}`)
+    Axios.get(`https://localhost:7040/api/Products/${params.productId}`)
       .then((response) => {
         setProduct(response.data);
       })
@@ -105,24 +105,30 @@ export default function Product(params: any) {
   };
 
   return (
-    <>
-      <Grid container spacing={2} sx={{ mt: 3 }}>
-        <Grid item xs={8}>
-          <img className="card" src={product.img} alt={product.productName} />
-        </Grid>
-        <Grid item xs={4}>
-          <p>{product.productName}</p>
-          <p>{product.price}</p>
-          <p>{product.productDetail}</p>
-          <Button
-            variant="contained"
-            color="inherit"
-            onClick={() => addProductToCart(product.productId)}
-          >
-            <AddShoppingCartIcon /> Add to cart
-          </Button>
-        </Grid>
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        mt: 0,
+        width: 600,
+        height: "auto",
+      }}
+    >
+      <Grid item xs={7}>
+        <img className="card" src={product.img} alt={product.productName} />
       </Grid>
-    </>
+      <Grid item xs={4}>
+        <h1>{product.productName}</h1>
+        <h2>{product.price}&nbsp;VNĐ</h2>
+        <p>{product.productDetail}</p>
+        <Button
+          variant="contained"
+          color="inherit"
+          onClick={() => addProductToCart(product.productId)}
+        >
+          <AddShoppingCartIcon /> Add to cart
+        </Button>
+      </Grid>
+    </Grid>
   );
 }

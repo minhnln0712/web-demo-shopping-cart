@@ -18,6 +18,7 @@ import { removeAllCart } from "./../../../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import Badge from "@mui/material/Badge";
+import { persistor } from "./../../../redux/store";
 
 export default function NavUser(params: any) {
   const dispatch = useAppDispatch();
@@ -61,6 +62,10 @@ export default function NavUser(params: any) {
   const logoutApp = () => {
     dispatch(logout());
     dispatch(removeAllCart());
+    persistor.pause();
+    persistor.flush().then(() => {
+      return persistor.purge();
+    });
     navigate("/", { replace: true });
   };
 

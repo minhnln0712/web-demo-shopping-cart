@@ -14,11 +14,13 @@ const reducers = combineReducers({
   cart: cartSlice.reducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+export const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
   reducer: persistedReducer,
 });
+
+export const persistor = persistStore(store);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
