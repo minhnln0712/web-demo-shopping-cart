@@ -10,6 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import Button from "@mui/material/Button";
 
 export default function Cart(params: any) {
   const [cart, setCart] = useState<any[]>([]);
@@ -72,7 +73,7 @@ export default function Cart(params: any) {
                 <StyledTableRow key={item.cartId}>
                   <StyledTableCell component="th" scope="row">
                     <Link
-                      to={`/product/${params.productId}`}
+                      to={`/product/${item.productId}`}
                       style={{ textDecoration: "none", color: "#212A3E" }}
                     >
                       <div className="image-card">
@@ -111,10 +112,9 @@ export default function Cart(params: any) {
           </TableBody>
         </Table>
       </TableContainer>
-
       <div>
         <h1>Tổng tiền {totalPrice}&nbsp;VNĐ</h1>
-        Nut update xuong db Nut update xuong db + check out
+        <Button variant="outlined">Check out</Button>
       </div>
     </>
   );
