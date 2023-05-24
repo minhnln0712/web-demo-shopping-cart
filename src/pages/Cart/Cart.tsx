@@ -107,13 +107,14 @@ export default function Cart(params: any) {
   };
 
   const checkOutCart = () => {
-    Axios.get(`https://localhost:7040/api/Orders?userid=${getUserId}`, {
+    Axios.post(`https://localhost:7040/api/Orders?userid=${getUserId}`, {
       headers: {
         Authorization: "Bearer " + getAccessToken,
         "Content-Type": "application/json",
       },
     })
       .then((response) => {
+        dispatch(removeAllCart());
         navigate("/", { replace: true });
       })
       .catch((error) => {

@@ -13,8 +13,7 @@ const reducers = combineReducers({
   user: userSlice.reducer,
   cart: cartSlice.reducer,
 });
-
-export const persistedReducer = persistReducer(persistConfig, reducers);
+ const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
   reducer: persistedReducer,

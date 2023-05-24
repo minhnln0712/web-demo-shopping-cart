@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "./../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -13,19 +13,14 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { logout } from "./../../../redux/userSlice";
-import { removeAllCart } from "./../../../redux/cartSlice";
+import { logout } from "../../../redux/userSlice";
+import { removeAllCart } from "../../../redux/cartSlice";
 import { useNavigate } from "react-router-dom";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
-import Badge from "@mui/material/Badge";
-import { persistor } from "./../../../redux/store";
+import { persistor } from "../../../redux/store";
 
-export default function NavUser(params: any) {
+export default function NavAdmin(params: any) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const cartList: any[] = useAppSelector((state) => {
-    return state.cart.listCart;
-  });
 
   const pages = [
     {
@@ -192,21 +187,6 @@ export default function NavUser(params: any) {
                 <Typography textAlign="center">Logout</Typography>
               </MenuItem>
             </Menu>
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Link to="/cart" style={{ textDecoration: "none" }}>
-              <Button
-                sx={{
-                  pt: "3px",
-                  color: "#146C94",
-                  display: "block",
-                }}
-              >
-                <Badge color="primary" badgeContent={cartList.length}>
-                  <ShoppingBasketIcon />
-                </Badge>
-              </Button>
-            </Link>
           </Box>
         </Toolbar>
       </Container>

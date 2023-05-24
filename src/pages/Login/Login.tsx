@@ -75,6 +75,11 @@ export default function Login(params: any) {
               token: response.data,
             })
           );
+          if (jwt_decode<MyToken>(response.data).RoleId === "1") {
+            navigate("/admin", { replace: true });
+            return;
+          }
+
           Axios.get(
             `https://localhost:7040/api/Carts?userid=${
               jwt_decode<MyToken>(response.data).Userid

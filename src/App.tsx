@@ -18,6 +18,8 @@ import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import NavGuest from "./components/Navbars/NavGuest/NavGuest";
 import NavUser from "./components/Navbars/NavUser/NavUser";
 import SignUp from "./pages/SignUp/SignUp";
+import NavAdmin from "./components/Navbars/NavAdmin/NavAdmin";
+import Admin from "./pages/Admin/Admin";
 
 function App() {
   const userRole = useAppSelector((state: any) => state.user.value.roleId);
@@ -27,7 +29,7 @@ function App() {
   const selectNavBar = () => {
     switch (userRole) {
       case "1":
-        break;
+        return <NavAdmin />;
       case "2":
         return <NavUser />;
       default:
@@ -46,7 +48,7 @@ function App() {
           <Route path="/user" element={<User />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/product/:productId" element={<Product />} />
-          SignUp
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </BrowserRouter>
     </div>
