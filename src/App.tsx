@@ -37,19 +37,40 @@ function App() {
     }
   };
 
+  const selectRoutes = () => {
+    switch (userRole) {
+      case "1":
+        return (
+          <Routes>
+            <Route path="/" element={<Admin />} />
+            <Route path="/product/:productId" element={<Product />} />
+          </Routes>
+        );
+      case "2":
+        return (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/user" element={<User />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/product/:productId" element={<Product />} />
+          </Routes>
+        );
+      default:
+        return (
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        );
+    }
+  };
+
   return (
     <div className="App">
       <BrowserRouter>
         {selectNavBar()}
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/user" element={<User />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/product/:productId" element={<Product />} />
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
+        {selectRoutes()}
       </BrowserRouter>
     </div>
   );

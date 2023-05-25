@@ -4,6 +4,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { useState } from "react";
 import OrderList from "../../components/List/OrderList/OrderList";
+import UserList from "../../components/List/UserList/UserList";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -61,7 +62,7 @@ export default function Admin() {
         <OrderList />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        <UserList />
       </TabPanel>
     </Box>
   );

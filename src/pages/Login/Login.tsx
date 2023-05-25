@@ -76,7 +76,7 @@ export default function Login(params: any) {
             })
           );
           if (jwt_decode<MyToken>(response.data).RoleId === "1") {
-            navigate("/admin", { replace: true });
+            navigate("/", { replace: true });
             return;
           }
 
